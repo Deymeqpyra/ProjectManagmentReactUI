@@ -5,6 +5,7 @@ import LoginProvider from '../features/Auth/Components/AuthComponents/LoginProvi
 import WelcomePage from '../features/Auth/Components/WelcomePage/WelcomePage'
 import ProtectedRoute from './ProtectedRoute'
 import CategoryTable from '../features/Category/Components/TableCategories'
+import PageNotFound from '../components/PageNotFound'
 
 const BasicRoute = () => {
   return (
@@ -13,14 +14,14 @@ const BasicRoute = () => {
         <Routes>
           <Route path="/login" element={<LoginProvider />} />
           <Route
-            path="/welcomePage"
+            path="/"
             element={
               <ProtectedRoute>
                 <WelcomePage />
               </ProtectedRoute>
             }
           />
-            <Route
+          <Route
             path="/TableCategories"
             element={
               <ProtectedRoute>
@@ -28,7 +29,7 @@ const BasicRoute = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<LoginProvider />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>
     </div>
