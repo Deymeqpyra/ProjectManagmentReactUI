@@ -1,30 +1,30 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { FC, ReactNode, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface ProtectedRouteProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const navigate = useNavigate()
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const token = localStorage.getItem('token')
 
-    if (!user) {
-      setIsAuthenticated(false);
-      navigate("/login");
+    if (!token) {
+      setIsAuthenticated(false)
+      navigate('/login')
     } else {
-      setIsAuthenticated(true);
+      setIsAuthenticated(true)
     }
-  }, [navigate]);
+  }, [navigate])
 
   if (isAuthenticated === null) {
-    return <p>Loading...</p>; 
+    return <p>Loading...</p>
   }
 
-  return isAuthenticated ? <>{children}</> : null;
-};
+  return isAuthenticated ? <>{children}</> : null
+}
 
-export default ProtectedRoute;
+export default ProtectedRoute

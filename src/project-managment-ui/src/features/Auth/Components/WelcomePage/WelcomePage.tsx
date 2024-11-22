@@ -3,10 +3,6 @@ import authService from '../../Service/AuthService'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../../Service/AuthService'
 
-interface DecodedToken {
-  email?: string
-}
-
 const WelcomePage = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const navigate = useNavigate()

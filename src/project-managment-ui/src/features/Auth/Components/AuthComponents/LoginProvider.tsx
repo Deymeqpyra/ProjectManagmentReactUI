@@ -14,7 +14,7 @@ const LoginProvider: React.FC = () => {
     const success = await AuthService.login(email, password)
     if (success) {
       authLogin()
-      navigate('/welcomePage')
+      navigate('/')
     } else {
       setError('Wrong crenditals.')
     }
@@ -30,18 +30,22 @@ const LoginProvider: React.FC = () => {
             handleLogin()
           }}
         >
+          <label>Email</label>
           <input
             type="text"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <br />
+          <label>Password</label>
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <br />
           <button type="submit">Sign in: </button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <p className="message">
