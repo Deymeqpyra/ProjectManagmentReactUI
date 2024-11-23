@@ -60,6 +60,22 @@ class AuthService {
       return null
     }
   }
+  static getUserRoleAndEmailFromToken(): {
+    email: string
+    role: string
+  } | null {
+    const token = this.getToken()
+
+    if (!token) return null
+
+    try {
+      const decodeToken: { email: string; role: string } = jwtDecode(token)
+      return decodeToken
+    } catch (error) {
+      console.error('Failed to decode token', error)
+      return null
+    }
+  }
 }
 
 export default AuthService

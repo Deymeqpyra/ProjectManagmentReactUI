@@ -1,11 +1,12 @@
-import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '../features/Auth/Components/AuthComponents/AuthContext'
 import LoginProvider from '../features/Auth/Components/AuthComponents/LoginProvider'
-import WelcomePage from '../features/Auth/Components/WelcomePage/WelcomePage'
 import ProtectedRoute from './ProtectedRoute'
-import CategoryTable from '../features/Category/Components/TableCategories'
+import CategoryTable from '../features/Category/Components/TableContainer'
 import PageNotFound from '../components/PageNotFound'
+import Layout from '../components/layout/Layout'
+import HomePage from '../features/Home/HomePage'
+import TableContainer from '../features/Category/Components/TableContainer'
 
 const BasicRoute = () => {
   return (
@@ -17,19 +18,28 @@ const BasicRoute = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <WelcomePage />
+                <Layout />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/TableCategories"
-            element={
-              <ProtectedRoute>
-                <CategoryTable />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<PageNotFound />} />
+          >
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute>
+                  <TableContainer />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </div>

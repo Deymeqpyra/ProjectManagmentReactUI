@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { CategoryService } from '../Service/CategoryService'
 import { CategoryDto } from '../../../dto/CategoryDto'
+import TableCategories from './TableCategory'
+import CreateCategory from './CreateCategory'
 
-const TableCategories: React.FC = () => {
+const TableContainer: React.FC = () => {
   const [categories, setCategories] = useState<CategoryDto[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -12,10 +14,9 @@ const TableCategories: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response: CategoryDto[] =
-          await categoryService.getCategories()
+        const response: CategoryDto[] = await categoryService.getCategories()
         setCategories(response ?? [])
-         // console.log(response.categories + ' IN TABLE CATEGORY ')
+        // console.log(response.categories + ' IN TABLE CATEGORY ')
       } catch (err) {
         setError('Failed to load categories')
       } finally {
@@ -50,34 +51,10 @@ const TableCategories: React.FC = () => {
 
   return (
     <div>
-      <h2>Category List</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((category) => (
-            <tr key={category.categoryId}>
-              <td>{category.categoryId}</td>
-              <td>{category.name}</td>
-              <td>
-                <button onClick={() => handleEdit(category.categoryId)}>
-                  Edit
-                </button>
-                <button onClick={() => handleDelete(category.categoryId)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableCategories categories={categories} />
+      <CreateCategory />
     </div>
   )
 }
 
-export default TableCategories
+export default TableContainer
