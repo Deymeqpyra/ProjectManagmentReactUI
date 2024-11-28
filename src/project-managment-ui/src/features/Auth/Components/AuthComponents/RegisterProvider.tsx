@@ -55,10 +55,10 @@ const RegisterProvider: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          <button type="submit">Sign in: </button>
+          <button type="submit">Sign up: </button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <p className="message">
-            Not have account? <a href="/register">Sign up</a>
+             Have an account? <a href="/login">Sign in</a>
           </p>
         </form>
       </div>
