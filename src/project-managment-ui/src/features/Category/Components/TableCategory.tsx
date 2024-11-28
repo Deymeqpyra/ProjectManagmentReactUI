@@ -1,11 +1,17 @@
 import React from 'react'
 import { CategoryDto } from '../../../dto/CategoryDto'
+import TableRow from './TableRow'
 
 interface TableProps {
-  categories: CategoryDto[]
+  categories: CategoryDto[],
+  onCategoryEdit: (id: string, name: string) => void;
+  onCategoryDelete: (id: string) => void;
 }
 
-const TableCategories = ({ categories }: TableProps) => {
+const TableCategories = ({ categories,
+  onCategoryEdit,
+  onCategoryDelete
+ }: TableProps) => {
   return (
     <div>
       <h2>Category List</h2>
@@ -19,10 +25,12 @@ const TableCategories = ({ categories }: TableProps) => {
         </thead>
         <tbody>
           {categories.map((category) => (
-            <tr key={category.categoryId}>
-              <td>{category.categoryId}</td>
-              <td>{category.name}</td>
-            </tr>
+           <TableRow
+           key={category.categoryId}
+           category={category}
+           onCategoryDelete={onCategoryDelete}
+           onCategoryEdit={onCategoryEdit}
+           ></TableRow>
           ))}
         </tbody>
       </table>

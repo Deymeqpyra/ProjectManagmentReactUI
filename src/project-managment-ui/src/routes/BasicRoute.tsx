@@ -7,6 +7,7 @@ import PageNotFound from '../components/PageNotFound'
 import Layout from '../components/layout/Layout'
 import HomePage from '../features/Home/HomePage'
 import TableContainer from '../features/Category/Components/TableContainer'
+import RegisterProvider from '../features/Auth/Components/AuthComponents/RegisterProvider'
 
 const BasicRoute = () => {
   return (
@@ -14,6 +15,7 @@ const BasicRoute = () => {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginProvider />} />
+          <Route path="/register" element={< RegisterProvider/>} />
           <Route
             path="/"
             element={

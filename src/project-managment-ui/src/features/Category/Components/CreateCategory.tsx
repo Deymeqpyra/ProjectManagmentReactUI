@@ -2,7 +2,11 @@ import React, { useCallback, useState } from 'react'
 import { CategoryService } from '../Service/CategoryService'
 import CategoryInput from './CategoryInput'
 
-const CreateCategory = () => {
+interface CreateCategoryProps {
+  onAddCategory: (newCategory: { categoryId: string; name: string }) => void
+}
+
+const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
   const [categoryTitle, setCategoryTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
 
@@ -17,8 +21,11 @@ const CreateCategory = () => {
       const createdCategory = await categoryService.createCategory(
         categoryTitle
       )
-
-      console.log('Failed to create ' + createdCategory.name)
+      onAddCategory({
+        categoryId: createdCategory.categoryId, // Adjust based on your actual response
+        name: createdCategory.name,
+      })
+      console.log('Success to create ' + createdCategory.name)
       setCategoryTitle('')
     } catch (error) {
       console.log('Failed to create err: ', error)

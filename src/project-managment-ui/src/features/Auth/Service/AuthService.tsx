@@ -23,6 +23,32 @@ class AuthService {
       return false
     }
   }
+  static async register(
+    userName: string,
+    email: string,
+    password: string
+  ): Promise<boolean> {
+    try {
+      const response = await AuthService.httpClient.post('/users/register', {
+        email,
+        userName,
+        password,
+      })
+
+      const loginResponse = await AuthService.httpClient.post<string>(
+        '/users/authenticate',
+        {
+          email,
+          password,
+        }
+      )
+
+      localStorage.setItem(AuthService.tokenKey, loginResponse)
+      return true
+    } catch {
+      return false
+    }
+  }
 
   static logout(): void {
     localStorage.removeItem(AuthService.tokenKey)

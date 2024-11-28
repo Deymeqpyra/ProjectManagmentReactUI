@@ -1,31 +1,68 @@
-import React, { useCallback, useState } from 'react'
-import { CategoryDto } from '../../../dto/CategoryDto'
-import CategoryInput from './CategoryInput'
+import React, { useState, useCallback, memo, useMemo } from "react";
+import { CategoryDto } from "../../../dto/CategoryDto";
+import CategoryInput from "./CategoryInput";
 
-interface TableRowProp {
-  category: CategoryDto
+interface TableRowProps {
+  category: CategoryDto;
+  onCategoryEdit: (id: string, name: string) => void;
+  onCategoryDelete: (id: string) => void;
 }
-const TableRow = ({ category }: TableRowProp) => {
-  const [categoryTitle, setCategoryTitle] = useState(category.name)
 
-  const memoizedSetTitle = useCallback((title: string) => {
-    setCategoryTitle(title)
-  }, [])
+const TableRowComponent = ({
+  category,
+  onCategoryEdit,
+  onCategoryDelete,
+}: TableRowProps) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [categoryTitle, setCategoryTitle] = useState(category.name);
+
+  const toggleEditMode = useCallback(() => {
+    setIsEditMode((prev) => !prev);
+  }, []);
+
+  const saveChanges = useCallback(() => {
+    onCategoryEdit(category.categoryId, categoryTitle);
+    setIsEditMode(false);
+  }, [onCategoryEdit, category.categoryId, categoryTitle]);
+
+  const deleteCategory = useCallback(() => {
+    onCategoryDelete(category.categoryId);
+  }, [onCategoryDelete, category.categoryId]);
+
+  const memoizedCategoryTitle = useMemo(() => category.name, [category.name]);
 
   return (
-    <div>
-      <tr key={category.categoryId}>
-        <td>{category.categoryId}</td>
-        <td>{category.name}</td>
-        <td>
+    <tr>
+      <td>{category.categoryId}</td>
+      <td>
+        {isEditMode ? (
           <CategoryInput
             categoryTitle={categoryTitle}
-            setCategoryTitle={memoizedSetTitle}
+            setCategoryTitle={setCategoryTitle}
           />
-        </td>
-      </tr>
-    </div>
-  )
-}
+        ) : (
+          memoizedCategoryTitle
+        )}
+      </td>
+      <td>
+        <div style={{ display: "flex", gap: "1em" }}>
+          {isEditMode ? (
+            <>
+              <button onClick={saveChanges}>Save</button>
+              <button onClick={toggleEditMode}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <button onClick={toggleEditMode}>Edit</button>
+              <button onClick={deleteCategory}>Delete</button>
+            </>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+};
 
-export default TableRow
+const TableRow = memo(TableRowComponent);
+
+export default TableRow;

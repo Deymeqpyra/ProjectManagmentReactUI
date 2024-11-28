@@ -11,6 +11,10 @@ const TableContainer: React.FC = () => {
 
   const categoryService = new CategoryService()
 
+  const handleAddCategory = (newCategory: CategoryDto) => {
+    setCategories((prevCategories) => [...prevCategories, newCategory]);
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -42,8 +46,20 @@ const TableContainer: React.FC = () => {
     }
   }
 
-  const handleEdit = (categoryId: string) => {
+  const handleEdit = async (categoryId: string, categoryUpdateTitle : string) => {
     alert(`Edit category with ID: ${categoryId}`)
+    try {
+      await categoryService.updateCategory(categoryId, categoryUpdateTitle)
+      setCategories((prevCategories) =>
+        prevCategories.map((category) =>
+          category.categoryId === categoryId
+            ? { ...category, name: categoryUpdateTitle }
+            : category
+        )
+      );
+    } catch (err) {
+      setError('Failed to delete category')
+    }
   }
 
   if (loading) return <div>Loading...</div>
@@ -51,8 +67,8 @@ const TableContainer: React.FC = () => {
 
   return (
     <div>
-      <TableCategories categories={categories} />
-      <CreateCategory />
+      <TableCategories categories={categories} onCategoryDelete={handleDelete} onCategoryEdit={handleEdit} />
+      <CreateCategory onAddCategory={handleAddCategory} />
     </div>
   )
 }
