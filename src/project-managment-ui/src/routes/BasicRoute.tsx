@@ -7,6 +7,7 @@ import Layout from '../components/layout/Layout'
 import HomePage from '../features/Home/HomePage'
 import TableContainer from '../features/Category/Components/TableContainer'
 import RegisterProvider from '../features/Auth/Components/AuthComponents/RegisterProvider'
+import ProjectContainer from '../features/Projects/Components/ProjectContainer'
 
 const BasicRoute = () => {
   return (
@@ -36,6 +37,14 @@ const BasicRoute = () => {
               element={
                 <ProtectedRoute>
                   <TableContainer />
+                </ProtectedRoute>
+              }
+            />
+              <Route
+              path="/projects"
+              element={
+                <ProtectedRoute>
+                  <ProjectContainer />
                 </ProtectedRoute>
               }
             />

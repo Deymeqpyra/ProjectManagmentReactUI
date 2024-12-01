@@ -1,0 +1,70 @@
+/* General container for the card list */
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .button-card{
+    margin: 10px;
+    background-color: #333;
+  }
+
+  .delete-button{
+    background-color: red;
+  }
+  /* Style for each card */
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover effect for the card */
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Title styling */
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  /* Description styling */
+  .card-description {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  
+  /* Priority styling */
+  .card-priority {
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Status styling */
+  .card-status {
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Loading and error messages */
+  .loading, .error {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #666;
+    margin-top: 2rem;
+  }
+  

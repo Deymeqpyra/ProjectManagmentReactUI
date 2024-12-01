@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import './AppNavbar.css';
 import AuthService from '../../features/Auth/Service/AuthService'
 
 const AppNavbar = () => {
@@ -24,7 +25,10 @@ const AppNavbar = () => {
           </li>
         )}
         <li>
-          <button onClick={handleLogout}>Logout</button>
+            <Link to="/projects">Projects</Link>
+          </li>
+        <li>
+          <button className='logout-btn' onClick={handleLogout}>Logout</button>
         </li>
       </ul>
     </nav>
