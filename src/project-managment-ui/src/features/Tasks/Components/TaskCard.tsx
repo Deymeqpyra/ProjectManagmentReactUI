@@ -1,14 +1,13 @@
 import React from 'react'
-import './TaskCard.css'
 import { ProjectTaskDto } from '../../../dto/ProjectTaskDto'
 
 interface TaskCardProps {
-    task: ProjectTaskDto;             
-    onDelete: (taskId: string) => void;
-    onMarkAsCompleted: (taskId: string) => void; 
-  }
+  task: ProjectTaskDto;
+  onDelete: (taskId: string) => void;
+  onMarkAsCompleted: (taskId: string) => void;
+}
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onMarkAsCompleted }) => {
   return (
     <div className="task-card">
       <h3 className="task-card-title">{task.title}</h3>
@@ -17,8 +16,18 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         Status: {task.completed ? 'Completed' : 'In Progress'}
       </p>
       <div className="task-card-actions">
-        <button className="mark-completed">Mark as Completed</button>
-        <button className="delete-task">Delete</button>
+        <button 
+          className="mark-completed" 
+          onClick={() => onMarkAsCompleted(task.taskId)}
+        >
+          Mark as Completed
+        </button>
+        <button 
+          className="delete-task" 
+          onClick={() => onDelete(task.taskId)} 
+        >
+          Delete
+        </button>
       </div>
     </div>
   )

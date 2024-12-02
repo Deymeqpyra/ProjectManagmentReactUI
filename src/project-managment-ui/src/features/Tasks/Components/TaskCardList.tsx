@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { ProjectTaskDto } from '../../../dto/ProjectTaskDto'
 import { TaskService } from '../Services/TaskService'
 import TaskCard from './TaskCard'
-import './TaskCardList.css'
 
 const TaskCardList = () => {
   const { projectId } = useParams<{ projectId: string }>()
@@ -35,26 +34,26 @@ const TaskCardList = () => {
   const handleDeleteTask = async (taskId: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
-        await taskService.deleteTask(taskId)
-        setTasks((prevTasks) =>
-          prevTasks.filter((task) => task.taskId !== taskId)
-        )
+        await taskService.deleteTask(taskId) 
+          setTasks((prevTasks) => prevTasks.filter((task) => task.taskId !== taskId))
       } catch (err) {
-        alert('Failed to delete task.')
+        alert('Failed to delete task. Please try again.')
       }
     }
   }
 
+
   const handleMarkAsCompleted = async (taskId: string) => {
     try {
-      await taskService.finishTask(taskId)
-      setTasks((prevTasks) =>
+       const response = await taskService.finishTask(taskId) 
+       setTasks((prevTasks) =>
         prevTasks.map((task) =>
-          task.taskId === taskId ? { ...task, completed: true } : task
-        )
-      )
-    } catch (err) {
-      alert('Failed to mark task as completed.')
+            task.taskId === taskId ? { ...task, completed: true } : task
+    )
+)
+} catch (err) {
+    console.log(err);
+      alert('Failed to mark task as completed. Please try again.')
     }
   }
 

@@ -4,7 +4,6 @@ import { TaskService } from '../Services/TaskService'
 import { CreateTaskDto } from '../../../dto/CreateTaskDto'
 import CreateTask from './CreateTask' // Import CreateTask component
 import TaskCardList from './TaskCardList' // Import TaskCardList component
-import './TaskContainer.css'
 
 const TaskContainer: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>()
