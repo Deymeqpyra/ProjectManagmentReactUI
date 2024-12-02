@@ -22,7 +22,7 @@ const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
         categoryTitle
       )
       onAddCategory({
-        categoryId: createdCategory.categoryId, // Adjust based on your actual response
+        categoryId: createdCategory.categoryId, 
         name: createdCategory.name,
       })
       console.log('Success to create ' + createdCategory.name)

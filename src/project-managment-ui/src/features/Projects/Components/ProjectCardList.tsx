@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ProjectDto } from "../../../dto/ProjectDto";
 import { ProjectService } from "../Services/ProjectServices";
-import "./ProjectCardList.css"; 
+import "./ProjectCardList.css";
 
 const ProjectCardList = () => {
   const [projects, setProjects] = useState<ProjectDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   const projectService = new ProjectService();
 
   useEffect(() => {
@@ -15,7 +16,6 @@ const ProjectCardList = () => {
       try {
         const data = await projectService.getProjectsByUserId();
         setProjects(data);
-        console.log(data);
       } catch (err) {
         setError("Failed to fetch projects.");
       } finally {
@@ -26,11 +26,17 @@ const ProjectCardList = () => {
     fetchProjects();
   }, []);
 
+  const handleNavigateToTasks = (projectId: string) => {
+    navigate(`/tasks/${projectId}`);
+  };
+
   const handleDelete = async (projectId: string) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
         await projectService.deleteProject(projectId);
-        setProjects((prevProjects) => prevProjects.filter(project => project.projectId !== projectId));
+        setProjects((prevProjects) =>
+          prevProjects.filter((project) => project.projectId !== projectId)
+        );
       } catch (err) {
         setError("Failed to delete the project.");
       }
@@ -49,11 +55,14 @@ const ProjectCardList = () => {
           <small className="card-priority">Priority: {project.priority.name}</small>
           <br />
           <small className="card-status">Status: {project.status.statusName}</small>
-          <br/>
-          <button className="button-card">Show task</button>
-          <button 
-            onClick={() => handleDelete(project.projectId)}
+          <br />
+          <button
+            className="button-card"
+            onClick={() => handleNavigateToTasks(project.projectId!)}
           >
+            Show Tasks
+          </button>
+          <button onClick={() => handleDelete(project.projectId!)}>
             Delete Project
           </button>
         </div>

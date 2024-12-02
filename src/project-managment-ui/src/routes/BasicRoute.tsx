@@ -8,6 +8,8 @@ import HomePage from '../features/Home/HomePage'
 import TableContainer from '../features/Category/Components/TableContainer'
 import RegisterProvider from '../features/Auth/Components/AuthComponents/RegisterProvider'
 import ProjectContainer from '../features/Projects/Components/ProjectContainer'
+import TaskCardList from '../features/Tasks/Components/TaskCardList'
+import TaskContainer from '../features/Tasks/Components/TaskContainer'
 
 const BasicRoute = () => {
   return (
@@ -15,7 +17,7 @@ const BasicRoute = () => {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginProvider />} />
-          <Route path="/register" element={< RegisterProvider/>} />
+          <Route path="/register" element={<RegisterProvider />} />
           <Route
             path="/"
             element={
@@ -40,11 +42,19 @@ const BasicRoute = () => {
                 </ProtectedRoute>
               }
             />
-              <Route
+            <Route
               path="/projects"
               element={
                 <ProtectedRoute>
                   <ProjectContainer />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+               path="/tasks/:projectId"
+              element={
+                <ProtectedRoute>
+                  <TaskContainer />
                 </ProtectedRoute>
               }
             />
