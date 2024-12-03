@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { CategoryService } from '../Service/CategoryService'
-import { CategoryDto } from '../../../dto/CategoryDto'
-import TableCategories from './TableCategory'
-import CreateCategory from './CreateCategory'
+import { CategoryService } from './Service/CategoryService'
+import { CategoryDto } from '../../dto/CategoryDto'
+import TableCategories from './Components/TableCategories'
+import CreateCategory from './Components/CreateCategory'
 
 const TableContainer: React.FC = () => {
   const [categories, setCategories] = useState<CategoryDto[]>([])
@@ -49,7 +49,7 @@ const TableContainer: React.FC = () => {
   const handleEdit = async (categoryId: string, categoryUpdateTitle : string) => {
     alert(`Edit category with ID: ${categoryId}`)
     try {
-      await categoryService.updateCategory(categoryId, categoryUpdateTitle)
+      await categoryService.updateCategory(categoryId, categoryUpdateTitle) // var // optimistic update
       setCategories((prevCategories) =>
         prevCategories.map((category) =>
           category.categoryId === categoryId
@@ -67,8 +67,8 @@ const TableContainer: React.FC = () => {
 
   return (
     <div>
-      <TableCategories categories={categories} onCategoryDelete={handleDelete} onCategoryEdit={handleEdit} />
       <CreateCategory onAddCategory={handleAddCategory} />
+      <TableCategories categories={categories} onCategoryDelete={handleDelete} onCategoryEdit={handleEdit} />
     </div>
   )
 }

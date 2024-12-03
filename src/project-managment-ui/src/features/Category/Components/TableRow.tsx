@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, useMemo } from "react";
+import { useState, useCallback, memo, useMemo } from "react";
 import { CategoryDto } from "../../../dto/CategoryDto";
 import CategoryInput from "./CategoryInput";
 

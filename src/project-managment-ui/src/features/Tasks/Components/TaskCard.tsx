@@ -18,13 +18,13 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onMarkAsCompleted }
       <div className="task-card-actions">
         <button 
           className="mark-completed" 
-          onClick={() => onMarkAsCompleted(task.taskId)}
+          onClick={() => onMarkAsCompleted(task.taskId!)}
         >
           Mark as Completed
         </button>
         <button 
           className="delete-task" 
-          onClick={() => onDelete(task.taskId)} 
+          onClick={() => onDelete(task.taskId!)} 
         >
           Delete
         </button>

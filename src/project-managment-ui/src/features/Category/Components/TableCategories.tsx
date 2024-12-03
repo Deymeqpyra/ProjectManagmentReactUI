@@ -1,4 +1,3 @@
-import React from 'react'
 import { CategoryDto } from '../../../dto/CategoryDto'
 import TableRow from './TableRow'
 
@@ -14,7 +13,7 @@ const TableCategories = ({ categories,
  }: TableProps) => {
   return (
     <div>
-      <h2>Category List</h2>
+      <h2>Categories List</h2>
       <table>
         <thead>
           <tr>
