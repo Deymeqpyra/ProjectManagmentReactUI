@@ -9,22 +9,23 @@ const CategoryInputComponent = ({
   categoryTitle,
   setCategoryTitle,
 }: CategoryInputProps) => {
-  const memoizedSetCategoryTitle = useCallback(
+  const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setCategoryTitle(event.target.value)
+      setCategoryTitle(event.target.value);
     },
     [setCategoryTitle]
-  )
+  );
+
   return (
     <div>
       <input
         type="text"
         value={categoryTitle}
-        onChange={memoizedSetCategoryTitle}
+        onChange={handleChange}
       />
     </div>
-  )
-}
+  );
+};
 const CategoryInput = React.memo(CategoryInputComponent)
 
 export default CategoryInput

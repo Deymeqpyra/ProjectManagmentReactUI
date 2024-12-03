@@ -8,53 +8,42 @@ interface TableRowProps {
   onCategoryDelete: (id: string) => void;
 }
 
-const TableRowComponent = ({
-  category,
-  onCategoryEdit,
-  onCategoryDelete,
-}: TableRowProps) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [categoryTitle, setCategoryTitle] = useState(category.name);
+const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: TableRowProps) => {
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState(category.name);
 
-  const toggleEditMode = useCallback(() => {
-    setIsEditMode((prev) => !prev);
-  }, []);
+  const toggleEditing = useCallback(() => setEditing((prev) => !prev), []);
 
   const saveChanges = useCallback(() => {
-    onCategoryEdit(category.categoryId, categoryTitle);
-    setIsEditMode(false);
-  }, [onCategoryEdit, category.categoryId, categoryTitle]);
+    onCategoryEdit(category.categoryId, name);
+    setEditing(false);
+  }, [onCategoryEdit, category.categoryId, name]);
 
-  const deleteCategory = useCallback(() => {
+  const handleDelete = useCallback(() => {
     onCategoryDelete(category.categoryId);
   }, [onCategoryDelete, category.categoryId]);
-
-  const memoizedCategoryTitle = useMemo(() => category.name, [category.name]);
 
   return (
     <tr>
       <td>{category.categoryId}</td>
       <td>
-        {isEditMode ? (
-          <CategoryInput
-            categoryTitle={categoryTitle}
-            setCategoryTitle={setCategoryTitle}
-          />
+        {editing ? (
+          <CategoryInput categoryTitle={name} setCategoryTitle={setName} />
         ) : (
-          memoizedCategoryTitle
+          category.name
         )}
       </td>
       <td>
         <div style={{ display: "flex", gap: "1em" }}>
-          {isEditMode ? (
+          {editing ? (
             <>
               <button onClick={saveChanges}>Save</button>
-              <button onClick={toggleEditMode}>Cancel</button>
+              <button onClick={toggleEditing}>Cancel</button>
             </>
           ) : (
             <>
-              <button onClick={toggleEditMode}>Edit</button>
-              <button onClick={deleteCategory}>Delete</button>
+              <button onClick={toggleEditing}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
             </>
           )}
         </div>

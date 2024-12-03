@@ -7,42 +7,39 @@ interface CreateCategoryProps {
 }
 
 const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
-  const [categoryTitle, setCategoryTitle] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [title, setTitle] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = useCallback(async () => {
-    if (!categoryTitle.trim()) {
-      setError('Category title is empty')
-      return
+  const handleCreateCategory = useCallback(async () => {
+    if (!title.trim()) {
+      setErrorMessage('Category title cannot be empty.');
+      return;
     }
 
     try {
-      const categoryService = new CategoryService()
-      const createdCategory = await categoryService.createCategory(
-        categoryTitle
-      )
+      const categoryService = new CategoryService();
+      const newCategory = await categoryService.createCategory(title);
       onAddCategory({
-        categoryId: createdCategory.categoryId, 
-        name: createdCategory.name,
-      })
-      console.log('Success to create ' + createdCategory.name)
-      setCategoryTitle('')
+        categoryId: newCategory.categoryId,
+        name: newCategory.name,
+      });
+      setTitle('');
     } catch (error) {
-      console.log('Failed to create err: ', error)
-      setError('Failed to create category. Please try again!')
+      setErrorMessage('Failed to create category. Please try again.');
     }
-  }, [categoryTitle])
+  }, [title, onAddCategory]);
+
   return (
     <div>
-      <h2>Create category</h2>
+      <h2>Create Category</h2>
       <CategoryInput
-        categoryTitle={categoryTitle}
-        setCategoryTitle={setCategoryTitle}
+        categoryTitle={title}
+        setCategoryTitle={setTitle}
       />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleSubmit}>Submit</button>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      <button onClick={handleCreateCategory}>Submit</button>
     </div>
-  )
-}
+  );
+};
 
 export default CreateCategory

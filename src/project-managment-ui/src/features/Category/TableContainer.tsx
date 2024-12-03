@@ -5,72 +5,72 @@ import TableCategories from './Components/TableCategories'
 import CreateCategory from './Components/CreateCategory'
 
 const TableContainer: React.FC = () => {
-  const [categories, setCategories] = useState<CategoryDto[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const [categories, setCategories] = useState<CategoryDto[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const categoryService = new CategoryService()
+  const categoryService = new CategoryService();
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory]);
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
+  const handleDeleteCategory = async (categoryId: string) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        const response: CategoryDto[] = await categoryService.getCategories()
-        setCategories(response ?? [])
-        // console.log(response.categories + ' IN TABLE CATEGORY ')
-      } catch (err) {
-        setError('Failed to load categories')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchCategories()
-  }, [])
-
-  const handleDelete = async (categoryId: string) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      try {
-        await categoryService.deleteCategory(categoryId)
+        var categoryData = await categoryService.deleteCategory(categoryId);
         setCategories((prevCategories) =>
-          prevCategories.filter(
-            (category) => category.categoryId !== categoryId
-          )
-        )
-      } catch (err) {
-        setError('Failed to delete category')
+          prevCategories.filter((category) => category.categoryId !== categoryId)
+        );
+      } catch (error) {
+        setError("Failed to delete category");
       }
     }
-  }
+  };
 
-  const handleEdit = async (categoryId: string, categoryUpdateTitle : string) => {
-    alert(`Edit category with ID: ${categoryId}`)
+  const handleEditCategory = async (categoryId: string, newCategoryTitle: string) => {
     try {
-      await categoryService.updateCategory(categoryId, categoryUpdateTitle) // var // optimistic update
+     var categoryData =  await categoryService.updateCategory(categoryId, newCategoryTitle);
       setCategories((prevCategories) =>
         prevCategories.map((category) =>
           category.categoryId === categoryId
-            ? { ...category, name: categoryUpdateTitle }
+            ? { ...category, name: categoryData.name }
             : category
         )
       );
-    } catch (err) {
-      setError('Failed to delete category')
+    } catch (error) {
+      setError("Failed to update category");
     }
-  }
+  };
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>{error}</div>
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryService.getCategories();
+        setCategories(response ?? []);
+      } catch (error) {
+        setError("Failed to load categories");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>
       <CreateCategory onAddCategory={handleAddCategory} />
-      <TableCategories categories={categories} onCategoryDelete={handleDelete} onCategoryEdit={handleEdit} />
+      <TableCategories
+        categories={categories}
+        onCategoryDelete={handleDeleteCategory}
+        onCategoryEdit={handleEditCategory}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default TableContainer

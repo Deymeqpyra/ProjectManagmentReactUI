@@ -2,7 +2,7 @@ import { GenericAbortSignal } from "axios";
 import { HttpClient } from "../../../configs/HttpClient";
 import { CategoryDto } from "../../../dto/CategoryDto";
 
-export class CategoryService {  // static vs class
+export class  CategoryService {  // static vs class
   private httpClient: HttpClient; // api service implemitation using static class
 
   constructor(signal?: GenericAbortSignal) {
