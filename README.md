@@ -49,7 +49,7 @@ This repository contains the React frontend for the **Project Management Tool**,
 | **Routing (role-based/private routes)**| ✅         |
 | **HTTP Requests**                      | ✅         |
 | **Render Data (table or list)**        | ✅         |
-| **CRUD Operations**                    | ❎         |
+| **CRUD Operations**                    | ✅         |
 | **Pagination/Load More/Infinite Scroll**| ❎         |
 | **Sorting**                            | ❎         |
 | **Filtering**                          | ❎         |
@@ -76,7 +76,7 @@ This repository contains the React frontend for the **Project Management Tool**,
 - [x] Login page implementation.
 - [x] Role-based routing.
 - [ ] State management integration.
-- [ ] CRUD functionality.
+- [x] CRUD functionality.
 - [ ] Pagination and filtering.
 - [x] Theming and layout.
 - [ ] CI/CD pipelines configured.
