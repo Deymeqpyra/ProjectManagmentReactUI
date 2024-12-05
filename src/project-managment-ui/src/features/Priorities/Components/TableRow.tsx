@@ -1,36 +1,36 @@
 import { useState, useCallback, memo } from "react";
-import { CategoryDto } from "../../../dto/CategoryDto";
-import CategoryInput from "./CategoryInput";
+import { PriorityDto } from "../../../dto/PriorityDto";
+import PriorityInput from "./PriorityInput.tsx";
 
 interface TableRowProps {
-  category: CategoryDto;
-  onCategoryEdit: (id: string, name: string) => void;
-  onCategoryDelete: (id: string) => void;
+  priority: PriorityDto;
+  onPriorityEdit: (id: string, name: string) => void;
+  onPriorityDelete: (id: string) => void;
 }
 
-const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: TableRowProps) => {
+const TableRowComponent = ({ priority, onPriorityEdit, onPriorityDelete }: TableRowProps) => {
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(category.name);
+  const [name, setName] = useState(priority.name);
 
   const toggleEditing = useCallback(() => setEditing((prev) => !prev), []);
 
   const saveChanges = useCallback(() => {
-    onCategoryEdit(category.categoryId, name);
+    onPriorityEdit(priority.priorityId, name);
     setEditing(false);
-  }, [onCategoryEdit, category.categoryId, name]);
+  }, [onPriorityEdit, priority.priorityId, name]);
 
   const handleDelete = useCallback(() => {
-    onCategoryDelete(category.categoryId);
-  }, [onCategoryDelete, category.categoryId]);
+    onPriorityDelete(priority.priorityId);
+  }, [onPriorityDelete, priority.priorityId]);
 
   return (
     <tr>
-      <td>{category.categoryId}</td>
+      <td>{priority.priorityId}</td>
       <td>
         {editing ? (
-          <CategoryInput categoryTitle={name} setCategoryTitle={setName} />
+          <PriorityInput priorityTitle={name} setPriorityTitle={setName} />
         ) : (
-          category.name
+          priority.name
         )}
       </td>
       <td>
@@ -55,3 +55,4 @@ const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: Table
 const TableRow = memo(TableRowComponent);
 
 export default TableRow;
+

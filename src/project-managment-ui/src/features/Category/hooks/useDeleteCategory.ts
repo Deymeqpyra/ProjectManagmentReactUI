@@ -6,17 +6,16 @@ const useDeleteCategory = () => {
   const [deletedCategoryId, setDeletedCategoryId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const categoryService = new CategoryService();
 
   const handleDeleteCategory = useCallback(async (categoryId: string) => {
     try {
-      await categoryService.deleteCategory(categoryId);
+      await CategoryService.deleteCategory(categoryId);
       setDeletedCategoryId(categoryId);
       setIsDeleting(false);
     } catch (error) {
       setError('Failed to delete category');
     }
-  }, [categoryService]);
+  }, []);
 
   return { isDeleting, deletedCategoryId, error, handleDeleteCategory, setIsDeleting };
 };

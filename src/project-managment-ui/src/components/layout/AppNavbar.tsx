@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import './AppNavbar.css';
+import './AppNavbar.css'
 import AuthService from '../../features/Auth/Service/AuthService'
 
 const AppNavbar = () => {
@@ -24,11 +24,18 @@ const AppNavbar = () => {
             <Link to="/categories">Category</Link>
           </li>
         )}
-        <li>
-            <Link to="/projects">Projects</Link>
+        {user?.role === 'Admin' && (
+          <li>
+            <Link to="/priorities">Priority</Link>
           </li>
+        )}
         <li>
-          <button className='logout-btn' onClick={handleLogout}>Logout</button>
+          <Link to="/projects">Projects</Link>
+        </li>
+        <li>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </li>
       </ul>
     </nav>

@@ -9,6 +9,7 @@ import RegisterProvider from '../features/Auth/Components/AuthComponents/Registe
 import ProjectContainer from '../features/Projects/ProjectContainer'
 import TaskContainer from '../features/Tasks/TaskContainer'
 import AdminRoute from './AdminRoute'
+import PriorityContainer from '../features/Priorities/PriorityContainer'
 
 const BasicRoute = () => {
   return (
@@ -38,6 +39,16 @@ const BasicRoute = () => {
               <ProtectedRoute>
                 <AdminRoute>
                   <TableContainer />
+                </AdminRoute>
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/priorities"
+            element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <PriorityContainer />
                 </AdminRoute>
               </ProtectedRoute>
             }
