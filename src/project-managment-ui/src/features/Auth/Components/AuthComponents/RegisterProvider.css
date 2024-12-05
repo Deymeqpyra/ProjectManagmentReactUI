@@ -1,0 +1,87 @@
+/* General page styles */
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+.form {
+  background: #1A1A19;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.register-form input:hover {
+  background-color: #1A1A1D; 
+}
+.register-form input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); 
+}
+.register-form input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.register-form input:focus {
+  border-color: #3498db; /* Blue border on focus */
+}
+
+.register-form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.register-form button {
+  background-color: #3498db; /* Primary blue */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.register-form button:hover {
+  background-color: #2980b9; /* Darker blue */
+}
+
+.message {
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.message a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.message a:hover {
+  color: #2980b9; /* Darker blue on hover */
+}
+
+p {
+  margin: 10px 0;
+  font-size: 14px;
+}

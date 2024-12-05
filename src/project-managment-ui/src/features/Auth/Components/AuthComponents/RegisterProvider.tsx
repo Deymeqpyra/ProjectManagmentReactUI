@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../../Service/AuthService'
 import useAuth from '../../hooks/useAuthContext'
+import './RegisterProvider.css'
 
 const RegisterProvider: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -55,7 +56,7 @@ const RegisterProvider: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          <button type="submit">Sign up: </button>
+          <button type="submit">Sign up</button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <p className="message">
              Have an account? <a href="/login">Sign in</a>

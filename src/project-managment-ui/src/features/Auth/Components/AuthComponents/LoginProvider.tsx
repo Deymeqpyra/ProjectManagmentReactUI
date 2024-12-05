@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../../Service/AuthService'
 import useAuth from '../../hooks/useAuthContext'
-
+import './LoginProvider.css'
 const LoginProvider: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -46,7 +46,7 @@ const LoginProvider: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          <button type="submit">Sign in: </button>
+          <button type="submit">Sign in</button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <p className="message">
             Not have account? <a href="/register">Sign up</a>
