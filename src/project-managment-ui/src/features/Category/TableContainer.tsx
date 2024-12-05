@@ -28,7 +28,6 @@ const TableContainer = () => {
     error: deleteError,
   } = useDeleteCategory()
 
-  const categoryService = new CategoryService()
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory])
@@ -66,7 +65,7 @@ const TableContainer = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await categoryService.getCategories()
+        const response = await CategoryService.getCategories()
         setCategories(response ?? [])
       } catch (error) {
         setError('Failed to load categories')

@@ -1,19 +1,24 @@
-import React from 'react';
-import { useGetRoleFromToken } from '../hooks/useGetRoleFromToken';
-import { Navigate } from 'react-router-dom';
+import React from 'react'
+import { useGetRoleFromToken } from '../features/Auth/hooks/useGetRoleFromToken'
+import { Navigate } from 'react-router-dom'
 
 interface AdminRouteProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
-  const role = useGetRoleFromToken();
+  const { role, isLoading } = useGetRoleFromToken()
 
-  if (role !== 'Admin') {
-    return <Navigate to="/" replace />;
+  if (isLoading) {
+    return <p>Loading...</p>
   }
 
-  return children;
-};
+  if (role !== 'Admin') {
+    return <Navigate to="/" replace />
+  }
 
-export default AdminRoute;
+  return <>{children}</>
+}
+
+export default AdminRoute
+

@@ -17,8 +17,7 @@ const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
     }
 
     try {
-      const categoryService = new CategoryService();
-      const newCategory = await categoryService.createCategory(title);
+      const newCategory = await CategoryService.createCategory(title);
       onAddCategory({
         categoryId: newCategory.categoryId,
         name: newCategory.name,
