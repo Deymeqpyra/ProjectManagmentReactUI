@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { CategoryService } from '../Service/CategoryService'
 import CategoryInput from './CategoryInput'
 
