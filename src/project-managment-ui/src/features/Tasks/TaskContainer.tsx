@@ -14,7 +14,6 @@ const TaskContainer: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false); // State to control modal visibility
-  const taskService = new TaskService();
   const { deleteTask } = useDeleteTask();
   const { finishTask } = useFinishTask();
 
@@ -26,7 +25,7 @@ const TaskContainer: React.FC = () => {
         return;
       }
       try {
-        const taskData = await taskService.getTasksByProjectId(projectId);
+        const taskData = await TaskService.getTasksByProjectId(projectId);
         setTasks(taskData);
       } catch (err) {
         setError("Failed to fetch tasks.");
@@ -56,7 +55,7 @@ const TaskContainer: React.FC = () => {
 
   const handleTaskCreated = (newTask: ProjectTaskDto) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
-    setShowModal(false); // Close the modal after task creation
+    setShowModal(false); 
   };
 
   if (loading) return <div>Loading tasks...</div>;

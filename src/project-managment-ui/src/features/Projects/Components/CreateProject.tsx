@@ -17,13 +17,11 @@ const CreateProject = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const projectService = new ProjectService();
-  const priorityService = new PriorityService(); 
 
   const fetchPrioritiesAndStatuses = useCallback(async () => {
     try {
       setLoading(true);
-      const prioritiesResponse = await priorityService.getAllPriorities(); 
+      const prioritiesResponse = await PriorityService.getAllPriorities(); 
       setPriorities(prioritiesResponse);
       console.log(prioritiesResponse);
     } catch (err) {
@@ -48,7 +46,7 @@ const CreateProject = () => {
     setError(null);
 
     try {
-      const projectData = await projectService.createProject(formData);  
+      const projectData = await ProjectService.createProject(formData);  
       navigate('/projects'); 
     } catch (err) {
       setError('Failed to create project');
@@ -102,6 +100,7 @@ const CreateProject = () => {
         <button type="submit" disabled={loading}>
           {loading ? 'Creating...' : 'Create Project'}
         </button>
+        
         {error && <p className="error-message">{error}</p>}
       </form>
     </div>

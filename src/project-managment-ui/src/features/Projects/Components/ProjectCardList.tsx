@@ -9,12 +9,11 @@ const ProjectCardList = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const projectService = new ProjectService();
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const data = await projectService.getProjectsByUserId();
+        const data = await ProjectService.getProjectsByUserId();
         setProjects(data);
       } catch (err) {
         setError("Failed to fetch projects.");
@@ -33,7 +32,7 @@ const ProjectCardList = () => {
   const handleDelete = async (projectId: string) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
-        await projectService.deleteProject(projectId);
+        await ProjectService.deleteProject(projectId);
         setProjects((prevProjects) =>
           prevProjects.filter((project) => project.projectId !== projectId)
         );

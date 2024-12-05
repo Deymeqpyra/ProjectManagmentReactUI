@@ -12,7 +12,6 @@ export const useGetRoleFromToken = () => {
       const { role: userRole } = AuthService.getUserRoleAndEmailFromToken() as {
         role: string;
       };
-      console.log('Role in hook:', userRole); 
       setRole(userRole);
     }
     setIsLoading(false);
