@@ -29,6 +29,11 @@ const AppNavbar = () => {
             <Link to="/priorities">Priority</Link>
           </li>
         )}
+         {user?.role === 'Admin' && (
+          <li>
+            <Link to="/statuses">Status</Link>
+          </li>
+        )}
         <li>
           <Link to="/projects">Projects</Link>
         </li>
