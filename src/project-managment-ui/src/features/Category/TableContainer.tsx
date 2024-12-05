@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Modal from 'react-modal' // Import React Modal
 import { CategoryService } from './Service/CategoryService'
 import { CategoryDto } from '../../dto/CategoryDto'
 import TableCategories from './Components/TableCategories'
@@ -6,10 +7,13 @@ import CreateCategory from './Components/CreateCategory'
 import useEditCategory from './hooks/useEditCategory'
 import useDeleteCategory from './hooks/useDeleteCategory'
 
+Modal.setAppElement('#root')
+
 const TableContainer: React.FC = () => {
   const [categories, setCategories] = useState<CategoryDto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
     handleEditCategory,
@@ -28,6 +32,7 @@ const TableContainer: React.FC = () => {
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory])
+    setIsModalOpen(false)
   }
 
   const handleDeleteCategory = async (categoryId: string) => {
@@ -77,12 +82,58 @@ const TableContainer: React.FC = () => {
 
   return (
     <div>
-      <CreateCategory onAddCategory={handleAddCategory} />
+      <button
+        onClick={() => setIsModalOpen(true)}
+        style={{
+          width: '50px',
+          float: 'right',
+          border: 'none',
+          padding: '10px 10px',
+          fontSize: '15px',
+          alignItems: 'center',
+          borderRadius: '4px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          cursor: 'pointer',
+        }}
+      >
+        Add
+      </button>
       <TableCategories
         categories={categories}
         onCategoryDelete={handleDeleteCategory}
         onCategoryEdit={handleEditCategory}
       />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Create Category Modal"
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          content: {
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            padding: '20px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            backgroundColor: '#1A1A1D',
+          },
+        }}
+      >
+        <h2>Create Category</h2>
+        <button
+          onClick={() => setIsModalOpen(false)}
+          style={{
+            float: 'right',
+          }}
+        >
+          Close
+        </button>
+        <CreateCategory onAddCategory={handleAddCategory} />
+      </Modal>
     </div>
   )
 }

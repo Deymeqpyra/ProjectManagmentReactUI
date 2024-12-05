@@ -17,8 +17,17 @@ const CategoryInputComponent = ({
   );
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <input
+      style={{
+        display: 'flex',
+        backgroundColor: '#3B1C32',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        padding: '8px',
+        fontSize: '16px',
+        transition: 'border-color 0.3s ease',
+      }}
         type="text"
         value={categoryTitle}
         onChange={handleChange}
