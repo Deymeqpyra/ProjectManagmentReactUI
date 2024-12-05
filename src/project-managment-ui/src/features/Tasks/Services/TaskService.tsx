@@ -14,6 +14,9 @@ export class TaskService {
   static async finishTask(taskId: string): Promise<ProjectTaskDto> {
     return TaskService.httpClient.put<ProjectTaskDto>(`/finishtask/${taskId}`, null);
   }
+  static async update(taskId: string, updateData: ProjectTaskDto): Promise<ProjectTaskDto> {
+    return TaskService.httpClient.put<ProjectTaskDto>(`/Update/${taskId}`, updateData);
+  }
 
   static async createTask(projectId: string, taskData: CreateTaskDto): Promise<ProjectTaskDto> {
     return TaskService.httpClient.post<ProjectTaskDto>(`/CreateTask/${projectId}`, taskData);

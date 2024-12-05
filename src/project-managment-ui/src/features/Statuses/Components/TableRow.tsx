@@ -1,36 +1,36 @@
 import { useState, useCallback, memo } from "react";
-import { CategoryDto } from "../../../dto/CategoryDto";
-import CategoryInput from "./CategoryInput";
+import { StatusDto } from "../../../dto/StatusDto";
+import StatusInput from "./StatusInput";
 
 interface TableRowProps {
-  category: CategoryDto;
-  onCategoryEdit: (id: string, name: string) => void;
-  onCategoryDelete: (id: string) => void;
+  status: StatusDto;
+  onStatusEdit: (id: string, name: string) => void;
+  onStatusDelete: (id: string) => void;
 }
 
-const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: TableRowProps) => {
+const TableRowComponent = ({ status, onStatusEdit, onStatusDelete }: TableRowProps) => {
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(category.name);
+  const [name, setName] = useState(status.statusName);
 
   const toggleEditing = useCallback(() => setEditing((prev) => !prev), []);
 
   const saveChanges = useCallback(() => {
-    onCategoryEdit(category.categoryId, name);
+    onStatusEdit(status.statusId, name);
     setEditing(false);
-  }, [onCategoryEdit, category.categoryId, name]);
+  }, [onStatusEdit, status.statusId, name]);
 
   const handleDelete = useCallback(() => {
-    onCategoryDelete(category.categoryId);
-  }, [onCategoryDelete, category.categoryId]);
+    onStatusDelete(status.statusId);
+  }, [onStatusDelete, status.statusId]);
 
   return (
     <tr>
-      <td>{category.categoryId}</td>
+      <td>{status.statusId}</td>
       <td>
         {editing ? (
-          <CategoryInput categoryTitle={name} setCategoryTitle={setName} />
+          <StatusInput statusTitle={name} setStatusTitle={setName} />
         ) : (
-          category.name
+          status.statusName
         )}
       </td>
       <td>
@@ -55,3 +55,4 @@ const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: Table
 const TableRow = memo(TableRowComponent);
 
 export default TableRow;
+

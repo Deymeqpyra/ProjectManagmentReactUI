@@ -1,8 +1,6 @@
 // src/services/PriorityService.ts
 import { HttpClient } from "../../../configs/HttpClient";
 import { PriorityDto } from "../../../dto/PriorityDto";
-import { CreatePriorityDto } from "../../../dto/CreatePriorityDto";
-import { UpdatePriorityDto } from "../../../dto/UpdatePriorityDto";
 
 export class PriorityService {
   private static readonly httpClient = new HttpClient({
@@ -17,12 +15,12 @@ export class PriorityService {
     return this.httpClient.get<PriorityDto>(`/GetById/${priorityId}`);
   }
 
-  static async createPriority(dto: CreatePriorityDto): Promise<PriorityDto> {
-    return this.httpClient.post<PriorityDto>("/CreatePriority", dto);
+  static async createPriority(title: string): Promise<PriorityDto> {
+    return this.httpClient.post<PriorityDto>("/CreatePriority", { title });
   }
 
-  static async updatePriority(priorityId: string, dto: UpdatePriorityDto): Promise<PriorityDto> {
-    return this.httpClient.put<PriorityDto>(`/UpdatePriority/${priorityId}`, dto);
+  static async updatePriority(priorityId: string, updateTitle: string): Promise<PriorityDto> {
+    return this.httpClient.put<PriorityDto>(`/UpdatePriority/${priorityId}`, updateTitle);
   }
 
   static async deletePriority(priorityId: string): Promise<PriorityDto> {

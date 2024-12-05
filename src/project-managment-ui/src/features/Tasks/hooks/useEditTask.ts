@@ -5,17 +5,16 @@ import { ProjectTaskDto } from "../../../dto/ProjectTaskDto";
 export const useEditTask = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const taskService = new TaskService();
 
   const editTask = async (
     taskId: string,
-    updatedData: Partial<ProjectTaskDto>,
+    updatedData: ProjectTaskDto,
     onSuccess: (updatedTask: ProjectTaskDto) => void
   ) => {
     setLoading(true);
     setError(null);
     try {
-      const updatedTask = await taskService.finishTask(taskId); 
+      const updatedTask = await TaskService.update(taskId, updatedData); 
       onSuccess(updatedTask);
     } catch (err) {
       setError("Failed to edit task.");

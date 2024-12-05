@@ -1,79 +1,79 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import { CategoryService } from './Service/CategoryService'
-import { CategoryDto } from '../../dto/CategoryDto'
-import TableCategories from './Components/TableCategories'
-import CreateCategory from './Components/CreateCategory'
-import useEditCategory from './hooks/useEditCategory'
-import useDeleteCategory from './hooks/useDeleteCategory'
+import { StatusService } from './Services/StatusServices' 
+import { StatusDto } from '../../dto/StatusDto'
+import TableStatuses from './Components/TableStatuses'
+import CreateStatus from './Components/CreateStatus'
+import useEditStatus from './hooks/useEditStatus'
+import useDeleteStatus from './hooks/useDeleteStatus'
 
 Modal.setAppElement('#root')
 
-const TableContainer = () => {
-  const [categories, setCategories] = useState<CategoryDto[]>([])
+const StatusContainer = () => {
+  const [statuses, setStatuses] = useState<StatusDto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
-    handleEditCategory,
+    handleEditStatus,
     isEditing,
-    editedCategory,
+    editedStatus,
     error: editError,
-  } = useEditCategory()
+  } = useEditStatus()
   const {
-    handleDeleteCategory: deleteCategory,
+    handleDeleteStatus: deleteStatus,
     isDeleting,
-    deletedCategoryId,
+    deletedStatusId,
     error: deleteError,
-  } = useDeleteCategory()
+  } = useDeleteStatus()
 
 
-  const handleAddCategory = (newCategory: CategoryDto) => {
-    setCategories((prevCategories) => [...prevCategories, newCategory])
+  const handleAddStatus = (newStatus: StatusDto) => {
+    setStatuses((prevStatuses) => [...prevStatuses, newStatus])
     setIsModalOpen(false)
   }
 
-  const handleDeleteCategory = async (categoryId: string) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      await deleteCategory(categoryId)
+  const handleDeleteStatus = async (statusId: string) => {
+    if (window.confirm('Are you sure you want to delete this status?')) {
+      await deleteStatus(statusId)
     }
   }
 
   useEffect(() => {
-    if (editedCategory) {
-      setCategories((prevCategories) =>
-        prevCategories.map((category) =>
-          category.categoryId === editedCategory.categoryId
-            ? editedCategory
-            : category
+    if (editedStatus) {
+      setStatuses((prevStatuses) =>
+        prevStatuses.map((status) =>
+          status.statusId === editedStatus.statusId
+            ? editedStatus
+            : status
         )
       )
     }
-  }, [editedCategory])
+  }, [editedStatus])
 
   useEffect(() => {
-    if (deletedCategoryId) {
-      setCategories((prevCategories) =>
-        prevCategories.filter(
-          (category) => category.categoryId !== deletedCategoryId
+    if (deletedStatusId) {
+      setStatuses((prevStatuses) =>
+        prevStatuses.filter(
+          (status) => status.statusId !== deletedStatusId
         )
       )
     }
-  }, [deletedCategoryId])
+  }, [deletedStatusId])
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchStatuses = async () => {
       try {
-        const response = await CategoryService.getCategories()
-        setCategories(response ?? [])
+        const response = await StatusService.getAllStatuses()
+        setStatuses(response ?? [])
       } catch (error) {
-        setError('Failed to load categories')
+        setError('Failed to load statuses')
       } finally {
         setIsLoading(false)
       }
     }
-    fetchCategories()
+    fetchStatuses()
   }, [])
 
   if (isLoading) return <div>Loading...</div>
@@ -98,15 +98,15 @@ const TableContainer = () => {
       >
         Add
       </button>
-      <TableCategories
-        categories={categories}
-        onCategoryDelete={handleDeleteCategory}
-        onCategoryEdit={handleEditCategory}
+      <TableStatuses
+        statuses={statuses}
+        onStatusDelete={handleDeleteStatus}
+        onStatusEdit={handleEditStatus}
       />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Create Category Modal"
+        contentLabel="Create Status Modal"
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -132,10 +132,11 @@ const TableContainer = () => {
         >
           X
         </button>
-        <CreateCategory onAddCategory={handleAddCategory} />
+        <CreateStatus onAddStatus={handleAddStatus} />
       </Modal>
     </div>
   )
 }
 
-export default TableContainer
+export default StatusContainer
+
