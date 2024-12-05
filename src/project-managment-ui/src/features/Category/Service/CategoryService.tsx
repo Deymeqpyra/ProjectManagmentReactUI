@@ -2,33 +2,36 @@ import { GenericAbortSignal } from "axios";
 import { HttpClient } from "../../../configs/HttpClient";
 import { CategoryDto } from "../../../dto/CategoryDto";
 
-export class  CategoryService {  // static vs class
-  private httpClient: HttpClient; // api service implemitation using static class
+export class CategoryService {
+  private static httpClient: HttpClient = new HttpClient({
+    baseURL: "http://localhost:5134/categories",
+  });
 
-  constructor(signal?: GenericAbortSignal) {
-    this.httpClient = new HttpClient({
-      baseURL: "http://localhost:5134/categories",
-      signal,
-    });
+  public static async getCategories(signal?: GenericAbortSignal): Promise<CategoryDto[]> {
+    return await this.httpClient.get<CategoryDto[]>("GetCategories", { signal });
   }
 
-  public async getCategories(): Promise<CategoryDto[]> {
-    return await this.httpClient.get<CategoryDto[]>("/GetCategories");
+  public static async getCategoryById(
+    categoryId: string,
+    signal?: GenericAbortSignal
+  ): Promise<CategoryDto> {
+    return await this.httpClient.get<CategoryDto>(`GetCategory/${categoryId}`, { signal });
   }
 
-  public async getCategoryById(categoryId: string): Promise<CategoryDto> {
-    return await this.httpClient.get<CategoryDto>(`/GetCategory/${categoryId}`);
+  public static async createCategory(name: string, signal?: GenericAbortSignal): Promise<CategoryDto> {
+    return await this.httpClient.post<CategoryDto>("CreateCategory", { name }, { signal });
   }
 
-  public async createCategory(name: string): Promise<CategoryDto> {
-    return await this.httpClient.post<CategoryDto>("/CreateCategory", { name });
+  public static async updateCategory(
+    categoryId: string,
+    name: string,
+    signal?: GenericAbortSignal
+  ): Promise<CategoryDto> {
+    return await this.httpClient.put<CategoryDto>(`UpdateCategory/${categoryId}`, { name }, { signal });
   }
 
-  public async updateCategory(categoryId: string, name: string): Promise<CategoryDto> {
-    return await this.httpClient.put<CategoryDto>(`/UpdateCategory/${categoryId}`, { name });
-  }
-
-  public async deleteCategory(categoryId: string): Promise<CategoryDto> {
-    return await this.httpClient.delete<CategoryDto>(`/DeleteCategory/${categoryId}`);
+  public static async deleteCategory(categoryId: string, signal?: GenericAbortSignal): Promise<CategoryDto> {
+    return await this.httpClient.delete<CategoryDto>(`DeleteCategory/${categoryId}`, { signal });
   }
 }
+
