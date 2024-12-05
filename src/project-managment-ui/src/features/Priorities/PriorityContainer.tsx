@@ -122,14 +122,15 @@ const PriorityContainer = () => {
           },
         }}
       >
-        <h2>Create Priority</h2>
         <button
           onClick={() => setIsModalOpen(false)}
           style={{
             float: 'right',
+            width: '50px',
+            backgroundColor: 'red'
           }}
         >
-          Close
+          X
         </button>
         <CreatePriority onAddPriority={handleAddPriority} />
       </Modal>

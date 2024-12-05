@@ -35,6 +35,7 @@ const CreatePriority = ({ onAddPriority }: CreatePriorityProps) => {
         priorityTitle={title}
         setPriorityTitle={setTitle}
       />
+      <br/>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <button onClick={handleCreatePriority}>Submit</button>
     </div>

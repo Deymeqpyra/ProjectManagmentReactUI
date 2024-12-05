@@ -35,6 +35,7 @@ const CreateStatus = ({ onAddStatus }: CreateStatusProps) => {
         statusTitle={title}
         setStatusTitle={setTitle}
       />
+      <br/>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <button onClick={handleCreateStatus}>Submit</button>
     </div>

@@ -37,11 +37,9 @@ const AppNavbar = () => {
         <li>
           <Link to="/projects">Projects</Link>
         </li>
-        <li>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
-        </li>
       </ul>
     </nav>
   )

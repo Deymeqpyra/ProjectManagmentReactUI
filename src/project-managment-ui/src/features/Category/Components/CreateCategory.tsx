@@ -35,6 +35,8 @@ const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
         categoryTitle={title}
         setCategoryTitle={setTitle}
       />
+      <br/>
+
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <button onClick={handleCreateCategory}>Submit</button>
     </div>

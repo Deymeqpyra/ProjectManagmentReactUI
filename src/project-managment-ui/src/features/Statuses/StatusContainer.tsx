@@ -122,14 +122,15 @@ const StatusContainer = () => {
           },
         }}
       >
-        <h2>Create Status</h2>
         <button
           onClick={() => setIsModalOpen(false)}
           style={{
             float: 'right',
+            width: '50px',
+            backgroundColor: 'red'
           }}
         >
-          Close
+          X
         </button>
         <CreateStatus onAddStatus={handleAddStatus} />
       </Modal>
