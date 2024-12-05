@@ -9,7 +9,7 @@ import useDeleteCategory from './hooks/useDeleteCategory'
 
 Modal.setAppElement('#root')
 
-const TableContainer: React.FC = () => {
+const TableContainer = () => {
   const [categories, setCategories] = useState<CategoryDto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

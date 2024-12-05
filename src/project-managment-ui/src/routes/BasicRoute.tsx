@@ -8,56 +8,59 @@ import TableContainer from '../features/Category/TableContainer'
 import RegisterProvider from '../features/Auth/Components/AuthComponents/RegisterProvider'
 import ProjectContainer from '../features/Projects/ProjectContainer'
 import TaskContainer from '../features/Tasks/TaskContainer'
+import AdminRoute from './AdminRoute'
 
 const BasicRoute = () => {
   return (
     <div>
-        <Routes>
-          <Route path="/login" element={<LoginProvider />} />
-          <Route path="/register" element={<RegisterProvider />} />
+      <Routes>
+        <Route path="/login" element={<LoginProvider />} />
+        <Route path="/register" element={<RegisterProvider />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route
-            path="/"
+            index
             element={
               <ProtectedRoute>
-                <Layout />
+                <HomePage />
               </ProtectedRoute>
             }
-          >
-            <Route
-              index
-              element={
-                <ProtectedRoute>
-                  <HomePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/categories"
-              element={
-                <ProtectedRoute>
+          />
+          <Route
+            path="/categories"
+            element={
+              <ProtectedRoute>
+                <AdminRoute>
                   <TableContainer />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/projects"
-              element={
-                <ProtectedRoute>
-                  <ProjectContainer />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-               path="/tasks/:projectId"
-              element={
-                <ProtectedRoute>
-                  <TaskContainer />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-        </Routes>
+                </AdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <ProtectedRoute>
+                <ProjectContainer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tasks/:projectId"
+            element={
+              <ProtectedRoute>
+                <TaskContainer />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
     </div>
   )
 }
