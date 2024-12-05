@@ -1,70 +1,88 @@
-/* General container for the card list */
-.card-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    padding: 1rem;
-  }
-  .button-card{
-    margin: 10px;
-    background-color: #333;
-  }
+.grid-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
 
-  .delete-button{
-    background-color: red;
-  }
-  /* Style for each card */
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    width: 250px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ddd;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  /* Hover effect for the card */
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Title styling */
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #333;
-  }
-  
-  /* Description styling */
-  .card-description {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    color: #555;
-  }
-  
-  /* Priority styling */
-  .card-priority {
-    font-size: 0.875rem;
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  /* Status styling */
-  .card-status {
-    font-size: 0.875rem;
-    font-weight: bold;
-    color: #28a745;
-  }
-  
-  /* Loading and error messages */
-  .loading, .error {
-    text-align: center;
-    font-size: 1.25rem;
-    color: #666;
-    margin-top: 2rem;
-  }
-  
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.grid-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.grid-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.grid-card-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.grid-card-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button-card {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-card:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+}
+
+.delete-button:hover {
+  background-color: #e60000;
+}
+
+.priority-tag,
+.status-tag {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status-tag{
+  color: #1A1A1D;
+}
+.priority-tag.very-low {
+  background-color: #ffcc00;
+}
+
+.priority-tag.medium {
+  background-color: #ff9800;
+}
+
+.priority-tag.high {
+  background-color: #f44336;
+}

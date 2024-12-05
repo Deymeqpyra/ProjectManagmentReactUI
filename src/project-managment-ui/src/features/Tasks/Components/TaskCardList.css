@@ -1,0 +1,28 @@
+/* General Container Styling */
+.task-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #1A1A1D;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Loader and Error Messages */
+  .loading,
+  .error {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #555;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .task-card-list {
+      padding: 15px;
+    }
+  }
+  

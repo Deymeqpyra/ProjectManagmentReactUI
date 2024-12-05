@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProjectDto } from "../../../dto/ProjectDto";
 import { ProjectService } from "../Services/ProjectServices";
@@ -47,26 +47,38 @@ const ProjectCardList = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="card-list">
-      {projects.map((project) => (
-        <div key={project.projectId} className="card">
-          <h3 className="card-title">{project.title}</h3>
-          <p className="card-description">{project.description}</p>
-          <small className="card-priority">Priority: {project.priority.name}</small>
-          <br />
-          <small className="card-status">Status: {project.status.statusName}</small>
-          <br />
-          <button
-            className="button-card"
-            onClick={() => handleNavigateToTasks(project.projectId!)}
-          >
-            Show Tasks
-          </button>
-          <button onClick={() => handleDelete(project.projectId!)}>
-            Delete Project
-          </button>
-        </div>
-      ))}
+    <div className="grid-container">
+      <div className="grid">
+        {projects.map((project) => (
+          <div key={project.projectId} className="grid-card">
+            <h3 className="grid-card-title">{project.title}</h3>
+            <p className="grid-card-description">{project.description}</p>
+            
+            <div className={`priority-tag ${project.priority.name.toLowerCase()}`}>
+              Priority: {project.priority.name}
+            </div>
+            <br/>
+            <div className={`status-tag ${project.status.statusName.toLowerCase()}`}>
+              Status: {project.status.statusName}
+            </div>
+            
+            <div className="grid-card-buttons">
+              <button
+                className="button-card"
+                onClick={() => handleNavigateToTasks(project.projectId!)}
+              >
+                Show Tasks
+              </button>
+              <button
+                className="button-card delete-button"
+                onClick={() => handleDelete(project.projectId!)}
+              >
+                Delete Project
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react'
 import { ProjectTaskDto } from '../../../dto/ProjectTaskDto'
+import "./TaskCard.css"
 
 interface TaskCardProps {
   task: ProjectTaskDto;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Modal from 'react-modal' // Import React Modal
+import Modal from 'react-modal'
 import { CategoryService } from './Service/CategoryService'
 import { CategoryDto } from '../../dto/CategoryDto'
 import TableCategories from './Components/TableCategories'

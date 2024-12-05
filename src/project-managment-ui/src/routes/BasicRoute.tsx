@@ -6,8 +6,8 @@ import Layout from '../components/layout/Layout'
 import HomePage from '../features/Home/HomePage'
 import TableContainer from '../features/Category/TableContainer'
 import RegisterProvider from '../features/Auth/Components/AuthComponents/RegisterProvider'
-import ProjectContainer from '../features/Projects/Components/ProjectContainer'
-import TaskContainer from '../features/Tasks/Components/TaskContainer'
+import ProjectContainer from '../features/Projects/ProjectContainer'
+import TaskContainer from '../features/Tasks/TaskContainer'
 
 const BasicRoute = () => {
   return (

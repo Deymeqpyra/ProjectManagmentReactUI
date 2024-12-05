@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { TaskService } from '../Services/TaskService'
-import { CategoryService } from '../../Category/Service/CategoryService'
 import { CreateTaskDto } from '../../../dto/CreateTaskDto'
 import Input from './Input'
 import { CategoryDto } from '../../../dto/CategoryDto'
+import useCreateTask from '../hooks/useCreateTask'
 
 interface CreateTaskProps {
-    projectId: string | undefined; 
-    onTaskCreated: (newTask: CreateTaskDto) => void;  
+  projectId: string | undefined; 
 }
 
+
 const CreateTask: React.FC<CreateTaskProps> = React.memo(({ projectId }) => {
+  const { createTask, fetchCategories } = useCreateTask();
+
   const [formData, setFormData] = useState<CreateTaskDto>({
     title: '',
     description: '',
@@ -20,20 +21,17 @@ const CreateTask: React.FC<CreateTaskProps> = React.memo(({ projectId }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
-  const taskService = new TaskService()
-  const categoryService = new CategoryService()
-
   const fetchCategoriesAndPriorities = useCallback(async () => {
     try {
       setLoading(true)
-      const categoriesResponse = await categoryService.getCategories() // Assuming this method fetches categories
+      const categoriesResponse = await fetchCategories()
       setCategories(categoriesResponse)
     } catch (err) {
       setError('Failed to load categories or priorities')
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [fetchCategories])
 
   useEffect(() => {
     fetchCategoriesAndPriorities()
@@ -48,19 +46,21 @@ const CreateTask: React.FC<CreateTaskProps> = React.memo(({ projectId }) => {
   }
 
   const handleCreateTask = async () => {
-    const { title, description, categoryId } = formData
-    if (!title || !description || !categoryId || !projectId) {
+    if (!projectId) {
+      alert('Project ID is required.')
+      return
+    }
+    if (!formData.title || !formData.description || !formData.categoryId) {
       alert('All fields are required.')
       return
     }
 
     setLoading(true)
     try {
-      await taskService.createTask(projectId, formData)
+      await createTask(projectId, formData)
       setFormData({ title: '', description: '', categoryId: ''})
       alert('Task created successfully.')
     } catch (err) {
-        console.log(formData);
       setError('Failed to create task.')
     } finally {
       setLoading(false)

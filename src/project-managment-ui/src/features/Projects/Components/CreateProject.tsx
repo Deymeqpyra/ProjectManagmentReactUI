@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectService } from '../Services/ProjectServices';
 import { PriorityService } from '../../Priorities/Services/PriorityService';
 import './CreateProject.css';
-import { StatusService } from '../../Statuses/Services/StatusServices';
 import { PriorityDto } from '../../../dto/PriorityDto';
 import { CreateProjectDto } from '../../../dto/CreateProjectDto';
 
