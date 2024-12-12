@@ -1,43 +1,59 @@
-import { useState, useCallback, memo } from "react";
-import { CategoryDto } from "../../../dto/CategoryDto";
-import CategoryInput from "./CategoryInput";
+import { useState, memo } from 'react'
+import { CategoryDto } from '../../../dto/CategoryDto'
+import CategoryInput from './CategoryInput'
+import { useCategoryContext } from './CategoryContext'
+import ErrorMessage from '../../../components/layout/ErrorMessage'
 
 interface TableRowProps {
-  category: CategoryDto;
-  onCategoryEdit: (id: string, name: string) => void;
-  onCategoryDelete: (id: string) => void;
+  category: CategoryDto
 }
 
-const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: TableRowProps) => {
-  const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(category.name);
+const TableRowComponent = ({ category }: TableRowProps) => {
+  const { editCategory, deleteCategory } = useCategoryContext()
+  const [isEditing, setIsEditing] = useState(false)
+  const [currentCategory, setCurrentCategory] = useState(category)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const toggleEditing = useCallback(() => setEditing((prev) => !prev), []);
+  const toggleEditing = () => setIsEditing((prev) => !prev)
 
-  const saveChanges = useCallback(() => {
-    onCategoryEdit(category.categoryId, name);
-    setEditing(false);
-  }, [onCategoryEdit, category.categoryId, name]);
+  const saveChanges = async () => {
+    if (!currentCategory.name.trim() || currentCategory.name.length <= 3) {
+      setErrorMessage('Category name is not correct')
+      return
+    }
+    await editCategory(currentCategory.categoryId, currentCategory.name)
+    setIsEditing(false)
+    setErrorMessage('');
+  }
 
-  const handleDelete = useCallback(() => {
-    onCategoryDelete(category.categoryId);
-  }, [onCategoryDelete, category.categoryId]);
+  const handleInputChange = (newName: string) => {
+    setCurrentCategory((prev) => ({ ...prev, name: newName }))
+  }
+
+  const handleDelete = async () => {
+    await deleteCategory(currentCategory.categoryId)
+  }
 
   return (
     <tr>
-      <td>{category.categoryId}</td>
+      <td>{currentCategory.categoryId}</td>
       <td>
-        {editing ? (
-          <CategoryInput categoryTitle={name} setCategoryTitle={setName} />
+        {errorMessage && <ErrorMessage error={errorMessage} />}
+        {isEditing ? (
+          <CategoryInput
+            categoryTitle={currentCategory.name}
+            setCategoryTitle={handleInputChange}
+          />
         ) : (
-          category.name
+          currentCategory.name
         )}
       </td>
       <td>
-        <div style={{ display: "flex", gap: "1em" }}>
-          {editing ? (
+        <div style={{ display: 'flex', gap: '1em' }}>
+          {isEditing ? (
             <>
               <button onClick={saveChanges}>Save</button>
+
               <button onClick={toggleEditing}>Cancel</button>
             </>
           ) : (
@@ -49,9 +65,9 @@ const TableRowComponent = ({ category, onCategoryEdit, onCategoryDelete }: Table
         </div>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-const TableRow = memo(TableRowComponent);
+const TableRow = memo(TableRowComponent)
 
-export default TableRow;
+export default TableRow

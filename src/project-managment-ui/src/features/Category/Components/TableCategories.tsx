@@ -1,15 +1,12 @@
 import { CategoryDto } from '../../../dto/CategoryDto'
+import { CategoryProvider } from './CategoryContext';
 import TableRow from './TableRow'
 
 interface TableProps {
-  categories: CategoryDto[],
-  onCategoryEdit: (id: string, name: string) => void;
-  onCategoryDelete: (id: string) => void;
+  categories: CategoryDto[]
 }
 
 const TableCategories = ({ categories,
-  onCategoryEdit,
-  onCategoryDelete
  }: TableProps) => {
   return (
     <div>
@@ -24,12 +21,12 @@ const TableCategories = ({ categories,
         </thead>
         <tbody>
           {categories.map((category) => (
-           <TableRow
+            <CategoryProvider>
+            <TableRow
            key={category.categoryId}
            category={category}
-           onCategoryDelete={onCategoryDelete}
-           onCategoryEdit={onCategoryEdit}
            ></TableRow>
+           </CategoryProvider>
           ))}
         </tbody>
       </table>

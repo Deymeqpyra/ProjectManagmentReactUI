@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { CategoryService } from './Service/CategoryService'
 import { CategoryDto } from '../../dto/CategoryDto'
@@ -6,6 +6,7 @@ import TableCategories from './Components/TableCategories'
 import CreateCategory from './Components/CreateCategory'
 import useEditCategory from './hooks/useEditCategory'
 import useDeleteCategory from './hooks/useDeleteCategory'
+import { CategoryProvider } from './Components/CategoryContext'
 
 Modal.setAppElement('#root')
 
@@ -16,18 +17,13 @@ const TableContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
-    handleEditCategory,
-    isEditing,
     editedCategory,
     error: editError,
   } = useEditCategory()
   const {
     handleDeleteCategory: deleteCategory,
-    isDeleting,
     deletedCategoryId,
-    error: deleteError,
   } = useDeleteCategory()
-
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory])
@@ -98,11 +94,9 @@ const TableContainer = () => {
       >
         Add
       </button>
-      <TableCategories
-        categories={categories}
-        onCategoryDelete={handleDeleteCategory}
-        onCategoryEdit={handleEditCategory}
-      />
+      <CategoryProvider>
+        <TableCategories categories={categories} />
+      </CategoryProvider>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -127,7 +121,7 @@ const TableContainer = () => {
           style={{
             float: 'right',
             width: '50px',
-            backgroundColor: 'red'
+            backgroundColor: 'red',
           }}
         >
           X
