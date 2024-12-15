@@ -1,7 +1,5 @@
 .grid-container {
   padding: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .grid {
@@ -69,12 +67,11 @@
   margin: 5px 0;
   border-radius: 12px;
   font-size: 14px;
+  background-color: gray;
+  transition: background-color 0.3s ease;
   font-weight: bold;
 }
 
-.status-tag{
-  color: #1A1A1D;
-}
 .priority-tag.very-low {
   background-color: #ffcc00;
 }
@@ -85,4 +82,21 @@
 
 .priority-tag.high {
   background-color: #f44336;
+}
+
+.tags-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.tag-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: #800080; /* Purple background for hashtags */
 }

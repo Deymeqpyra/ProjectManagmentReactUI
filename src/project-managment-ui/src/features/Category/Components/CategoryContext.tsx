@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import useEditCategory from '../hooks/useEditCategory';
 import useDeleteCategory from '../hooks/useDeleteCategory';
 import { CategoryDto } from '../../../dto/CategoryDto';
@@ -8,11 +8,11 @@ interface CategoryContextProps {
   editCategory: (id: string, name: string) => Promise<void>;
   deleteCategory: (id: string) => Promise<void>;
   updateCategory: (updatedCategory: CategoryDto) => void;
+  error: string | null;
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
   isDeleting: boolean;
   setIsDeleting: (deleting: boolean) => void;
-  error: string | null;
 }
 
 const CategoryContext = createContext<CategoryContextProps | undefined>(undefined);
@@ -20,27 +20,26 @@ const CategoryContext = createContext<CategoryContextProps | undefined>(undefine
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
   const [categories, setCategories] = useState<CategoryDto[]>([]);
 
-  const updateCategory = (updatedCategory: CategoryDto) => {
+  const { isEditing, setIsEditing, handleEditCategory, error: editError } = useEditCategory();
+  const { isDeleting, setIsDeleting, handleDeleteCategory, error: deleteError } = useDeleteCategory();
+
+  const updateCategory = useCallback((updatedCategory: CategoryDto) => {
     setCategories((prev) =>
       prev.map((category) =>
         category.categoryId === updatedCategory.categoryId ? updatedCategory : category
       )
     );
-  };
+  }, []);
 
-  const {
-    isEditing,
-    handleEditCategory: editCategory,
-    setIsEditing,
-    error: editError,
-  } = useEditCategory();
+  const editCategory = useCallback(
+    (id: string, name: string) => handleEditCategory(id, name, updateCategory),
+    [handleEditCategory, updateCategory]
+  );
 
-  const {
-    isDeleting,
-    handleDeleteCategory: deleteCategory,
-    setIsDeleting,
-    error: deleteError,
-  } = useDeleteCategory();
+  const deleteCategory = useCallback(
+    (id: string) => handleDeleteCategory(id),
+    [handleDeleteCategory]
+  );
 
   const error = editError || deleteError;
 
@@ -48,14 +47,14 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     <CategoryContext.Provider
       value={{
         categories,
-        editCategory: (id, name) => editCategory(id, name, updateCategory),
+        editCategory,
         deleteCategory,
         updateCategory,
+        error,
         isEditing,
         setIsEditing,
         isDeleting,
         setIsDeleting,
-        error,
       }}
     >
       {children}
@@ -63,7 +62,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useCategoryContext = () => {
+export const useCategoryContext = (): CategoryContextProps => {
   const context = useContext(CategoryContext);
   if (!context) {
     throw new Error('useCategoryContext must be used within a CategoryProvider');

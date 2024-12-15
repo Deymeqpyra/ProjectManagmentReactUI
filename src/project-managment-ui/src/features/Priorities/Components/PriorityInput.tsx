@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback } from 'react';
 
 interface PriorityInputProps {
-  priorityTitle: string
-  setPriorityTitle: (title: string) => void
+  priorityTitle: string;
+  setPriorityTitle: (title: string) => void;
 }
 
 const PriorityInputComponent = ({
@@ -17,25 +17,40 @@ const PriorityInputComponent = ({
   );
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <label
+        htmlFor="priority-input"
+        style={{
+          color: '#FFFFFF',
+          marginBottom: '8px',
+          fontSize: '14px',
+          fontWeight: 'bold',
+        }}
+      >
+        Priority Name
+      </label>
       <input
-      style={{
-        display: 'flex',
-        backgroundColor: '#3B1C32',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        padding: '8px',
-        fontSize: '16px',
-        transition: 'border-color 0.3s ease',
-      }}
+        id="priority-input"
+        style={{
+          backgroundColor: '#3B1C32',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          padding: '8px',
+          fontSize: '16px',
+          color: '#FFFFFF',
+          width: '100%',
+          maxWidth: '300px',
+          transition: 'border-color 0.3s ease',
+        }}
         type="text"
         value={priorityTitle}
+        placeholder="Enter priority name..."
         onChange={handleChange}
       />
     </div>
   );
 };
-const PriorityInput = React.memo(PriorityInputComponent)
 
-export default PriorityInput
+const PriorityInput = React.memo(PriorityInputComponent);
 
+export default PriorityInput;

@@ -13,7 +13,7 @@ const useEditCategory = () => {
   ) => {
     try {
       const updatedCategory = await CategoryService.updateCategory(categoryId, newCategoryTitle);
-      onCategoryUpdated(updatedCategory); // Callback to update parent state
+      onCategoryUpdated(updatedCategory); 
       setIsEditing(false);
     } catch (error) {
       setError('Failed to update category');

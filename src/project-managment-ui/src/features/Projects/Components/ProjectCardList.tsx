@@ -52,25 +52,35 @@ const ProjectCardList = () => {
           <div key={project.projectId} className="grid-card">
             <h3 className="grid-card-title">{project.title}</h3>
             <p className="grid-card-description">{project.description}</p>
-            
+
+            {project.tagProjects && project.tagProjects.length > 0 && (
+              <div className="tags-container">
+                {project.tagProjects.map(({ tag }) => (
+                  <div key={tag.tagId} className={`tag-label ${tag.name.toLowerCase()}`}>
+                    #{tag.name}
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className={`priority-tag ${project.priority.name.toLowerCase()}`}>
               Priority: {project.priority.name}
             </div>
-            <br/>
+            <br />
             <div className={`status-tag ${project.status.statusName.toLowerCase()}`}>
               Status: {project.status.statusName}
             </div>
-            
+
             <div className="grid-card-buttons">
               <button
                 className="button-card"
-                onClick={() => handleNavigateToTasks(project.projectId!)}
+                onClick={() => handleNavigateToTasks(project.projectId)}
               >
                 Show Tasks
               </button>
               <button
                 className="button-card delete-button"
-                onClick={() => handleDelete(project.projectId!)}
+                onClick={() => handleDelete(project.projectId)}
               >
                 Delete Project
               </button>
