@@ -4,21 +4,23 @@ import { CategoryDto } from '../../../dto/CategoryDto';
 
 const useEditCategory = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedCategory, setEditedCategory] = useState<CategoryDto | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-
-  const handleEditCategory = useCallback(async (categoryId: string, newCategoryTitle: string) => {
+  const handleEditCategory = useCallback(async (
+    categoryId: string,
+    newCategoryTitle: string,
+    onCategoryUpdated: (updatedCategory: CategoryDto) => void
+  ) => {
     try {
-      const categoryData = await CategoryService.updateCategory(categoryId, newCategoryTitle);
-      setEditedCategory(categoryData);
+      const updatedCategory = await CategoryService.updateCategory(categoryId, newCategoryTitle);
+      onCategoryUpdated(updatedCategory); // Callback to update parent state
       setIsEditing(false);
     } catch (error) {
       setError('Failed to update category');
     }
   }, []);
 
-  return { isEditing, editedCategory, error, handleEditCategory, setIsEditing };
+  return { isEditing, error, handleEditCategory, setIsEditing };
 };
 
 export default useEditCategory;

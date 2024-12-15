@@ -14,25 +14,24 @@ const TableRowComponent = ({ category }: TableRowProps) => {
   const [currentCategory, setCurrentCategory] = useState(category)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const toggleEditing = () => setIsEditing((prev) => !prev)
+  const toggleEditing = () => setIsEditing((prev) => !prev);
 
   const saveChanges = async () => {
     if (!currentCategory.name.trim() || currentCategory.name.length <= 3) {
-      setErrorMessage('Category name is not correct')
-      return
+      setErrorMessage('Category name is not correct');
+      return;
     }
-    await editCategory(currentCategory.categoryId, currentCategory.name)
-    setIsEditing(false)
-    setErrorMessage('');
-  }
+    await editCategory(currentCategory.categoryId, currentCategory.name);
+    setIsEditing(false);
+  };
 
   const handleInputChange = (newName: string) => {
-    setCurrentCategory((prev) => ({ ...prev, name: newName }))
-  }
+    setCurrentCategory((prev) => ({ ...prev, name: newName }));
+  };
 
   const handleDelete = async () => {
-    await deleteCategory(currentCategory.categoryId)
-  }
+    await deleteCategory(currentCategory.categoryId);
+  };
 
   return (
     <tr>
@@ -53,7 +52,6 @@ const TableRowComponent = ({ category }: TableRowProps) => {
           {isEditing ? (
             <>
               <button onClick={saveChanges}>Save</button>
-
               <button onClick={toggleEditing}>Cancel</button>
             </>
           ) : (
@@ -65,8 +63,8 @@ const TableRowComponent = ({ category }: TableRowProps) => {
         </div>
       </td>
     </tr>
-  )
-}
+  );
+};
 
 const TableRow = memo(TableRowComponent)
 
