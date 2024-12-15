@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { CategoryService } from '../Service/CategoryService'
 import CategoryInput from './CategoryInput'
+import ErrorMessage from '../../../components/layout/ErrorMessage';
 
 interface CreateCategoryProps {
   onAddCategory: (newCategory: { categoryId: string; name: string }) => void
@@ -37,7 +38,7 @@ const CreateCategory = ({ onAddCategory }: CreateCategoryProps) => {
       />
       <br/>
 
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage && <ErrorMessage error={errorMessage}/>}
       <button onClick={handleCreateCategory}>Submit</button>
     </div>
   );

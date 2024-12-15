@@ -1,0 +1,36 @@
+/* TagComponent.css */
+
+.select-tag {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 8px;
+    width: 200px;
+  }
+  
+  .select-tag:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .add-tag-button {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30px;
+  }
+  
+  .add-tag-button:hover {
+    background-color: #218838;
+  }
+  
+  .add-tag-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  

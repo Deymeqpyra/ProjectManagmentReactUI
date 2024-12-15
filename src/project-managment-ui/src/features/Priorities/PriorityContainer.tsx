@@ -16,16 +16,10 @@ const PriorityContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
-    handleEditPriority,
-    isEditing,
     editedPriority,
-    error: editError,
   } = useEditPriority()
   const {
-    handleDeletePriority: deletePriority,
-    isDeleting,
     deletedPriorityId,
-    error: deleteError,
   } = useDeletePriority()
 
 
@@ -34,11 +28,7 @@ const PriorityContainer = () => {
     setIsModalOpen(false)
   }
 
-  const handleDeletePriority = async (priorityId: string) => {
-    if (window.confirm('Are you sure you want to delete this priority?')) {
-      await deletePriority(priorityId)
-    }
-  }
+
 
   useEffect(() => {
     if (editedPriority) {
@@ -100,8 +90,6 @@ const PriorityContainer = () => {
       </button>
       <TablePriorities
         priorities={priorities}
-        onPriorityDelete={handleDeletePriority}
-        onPriorityEdit={handleEditPriority}
       />
       <Modal
         isOpen={isModalOpen}

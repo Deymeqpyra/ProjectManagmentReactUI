@@ -10,5 +10,11 @@ export interface ProjectDto {
       statusId: string;
       statusName: string;
     };
+    tagProjects: [{
+      tag:{
+        tagId: string;
+        name: string;
+      }}
+    ]
   }
   

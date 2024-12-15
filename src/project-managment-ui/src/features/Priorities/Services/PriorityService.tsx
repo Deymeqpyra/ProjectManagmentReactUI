@@ -1,5 +1,6 @@
 // src/services/PriorityService.ts
 import { HttpClient } from "../../../configs/HttpClient";
+import { CreatePriorityDto } from "../../../dto/CreatePriorityDto";
 import { PriorityDto } from "../../../dto/PriorityDto";
 
 export class PriorityService {
@@ -19,7 +20,7 @@ export class PriorityService {
     return this.httpClient.post<PriorityDto>("/CreatePriority", { title });
   }
 
-  static async updatePriority(priorityId: string, updateTitle: string): Promise<PriorityDto> {
+  static async updatePriority(priorityId: string, updateTitle: CreatePriorityDto): Promise<PriorityDto> {
     return this.httpClient.put<PriorityDto>(`/UpdatePriority/${priorityId}`, updateTitle);
   }
 

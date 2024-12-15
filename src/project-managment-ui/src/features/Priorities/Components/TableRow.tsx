@@ -1,27 +1,31 @@
-import { useState, useCallback, memo } from "react";
-import { PriorityDto } from "../../../dto/PriorityDto";
-import PriorityInput from "./PriorityInput.tsx";
+import React, { useState, useCallback, memo } from 'react'
+import { usePriorityContext } from './PriorityContext'
+import { PriorityDto } from '../../../dto/PriorityDto'
+import PriorityInput from './PriorityInput.tsx'
+import ErrorMessage from '../../../components/layout/ErrorMessage.tsx'
 
 interface TableRowProps {
-  priority: PriorityDto;
-  onPriorityEdit: (id: string, name: string) => void;
-  onPriorityDelete: (id: string) => void;
+  priority: PriorityDto
 }
 
-const TableRowComponent = ({ priority, onPriorityEdit, onPriorityDelete }: TableRowProps) => {
-  const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(priority.name);
+const TableRowComponent = ({ priority }: TableRowProps) => {
+  const { editPriority, deletePriority, error } = usePriorityContext()
+  const [editing, setEditing] = useState(false)
+  const [name, setName] = useState(priority.name)
 
-  const toggleEditing = useCallback(() => setEditing((prev) => !prev), []);
+  const toggleEditing = useCallback(() => setEditing((prev) => !prev), [])
 
-  const saveChanges = useCallback(() => {
-    onPriorityEdit(priority.priorityId, name);
-    setEditing(false);
-  }, [onPriorityEdit, priority.priorityId, name]);
+  const saveChanges = useCallback(async () => {
+    await editPriority(priority.priorityId, name)
+    console.log(
+      'changed name' + name + ' changed priorityId ' + priority.priorityId
+    )
+    setEditing(false)
+  }, [editPriority, priority.priorityId, name])
 
-  const handleDelete = useCallback(() => {
-    onPriorityDelete(priority.priorityId);
-  }, [onPriorityDelete, priority.priorityId]);
+  const handleDelete = useCallback(async () => {
+    await deletePriority(priority.priorityId)
+  }, [deletePriority, priority.priorityId])
 
   return (
     <tr>
@@ -32,9 +36,10 @@ const TableRowComponent = ({ priority, onPriorityEdit, onPriorityDelete }: Table
         ) : (
           priority.name
         )}
+        {error && <ErrorMessage error={error} />}
       </td>
       <td>
-        <div style={{ display: "flex", gap: "1em" }}>
+        <div style={{ display: 'flex', gap: '1em' }}>
           {editing ? (
             <>
               <button onClick={saveChanges}>Save</button>
@@ -49,10 +54,9 @@ const TableRowComponent = ({ priority, onPriorityEdit, onPriorityDelete }: Table
         </div>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-const TableRow = memo(TableRowComponent);
+const TableRow = memo(TableRowComponent)
 
-export default TableRow;
-
+export default TableRow

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { CategoryService } from './Service/CategoryService'
 import { CategoryDto } from '../../dto/CategoryDto'
@@ -6,6 +6,7 @@ import TableCategories from './Components/TableCategories'
 import CreateCategory from './Components/CreateCategory'
 import useEditCategory from './hooks/useEditCategory'
 import useDeleteCategory from './hooks/useDeleteCategory'
+import { CategoryProvider } from './Components/CategoryContext'
 
 Modal.setAppElement('#root')
 
@@ -15,49 +16,18 @@ const TableContainer = () => {
   const [error, setError] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const {
-    handleEditCategory,
-    isEditing,
-    editedCategory,
-    error: editError,
-  } = useEditCategory()
-  const {
-    handleDeleteCategory: deleteCategory,
-    isDeleting,
-    deletedCategoryId,
-    error: deleteError,
-  } = useDeleteCategory()
-
+  const { handleDeleteCategory: deleteCategory, deletedCategoryId } = useDeleteCategory()
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory])
     setIsModalOpen(false)
   }
 
-  const handleDeleteCategory = async (categoryId: string) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      await deleteCategory(categoryId)
-    }
-  }
-
-  useEffect(() => {
-    if (editedCategory) {
-      setCategories((prevCategories) =>
-        prevCategories.map((category) =>
-          category.categoryId === editedCategory.categoryId
-            ? editedCategory
-            : category
-        )
-      )
-    }
-  }, [editedCategory])
 
   useEffect(() => {
     if (deletedCategoryId) {
       setCategories((prevCategories) =>
-        prevCategories.filter(
-          (category) => category.categoryId !== deletedCategoryId
-        )
+        prevCategories.filter((category) => category.categoryId !== deletedCategoryId)
       )
     }
   }, [deletedCategoryId])
@@ -98,11 +68,11 @@ const TableContainer = () => {
       >
         Add
       </button>
-      <TableCategories
-        categories={categories}
-        onCategoryDelete={handleDeleteCategory}
-        onCategoryEdit={handleEditCategory}
-      />
+      <CategoryProvider>
+        <TableCategories
+          categories={categories}
+        />
+      </CategoryProvider>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -127,7 +97,7 @@ const TableContainer = () => {
           style={{
             float: 'right',
             width: '50px',
-            backgroundColor: 'red'
+            backgroundColor: 'red',
           }}
         >
           X

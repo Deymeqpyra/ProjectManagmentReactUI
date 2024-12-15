@@ -1,16 +1,13 @@
 import { PriorityDto } from '../../../dto/PriorityDto'
-import TableRow from './TableRow'; 
+import { PriorityProvider } from './PriorityContext'
+import TableRow from './TableRow'
 
 interface TableProps {
-  priorities: PriorityDto[],
-  onPriorityEdit: (id: string, name: string) => void;
-  onPriorityDelete: (id: string) => void;
+  priorities: PriorityDto[]
 }
 
 const TablePriorities = ({
-  priorities,
-  onPriorityEdit,
-  onPriorityDelete
+  priorities
 }: TableProps) => {
   return (
     <div>
@@ -25,12 +22,12 @@ const TablePriorities = ({
         </thead>
         <tbody>
           {priorities.map((priority) => (
-            <TableRow
-              key={priority.priorityId}
-              priority={priority}
-              onPriorityDelete={onPriorityDelete}
-              onPriorityEdit={onPriorityEdit}
-            ></TableRow>
+            <PriorityProvider>
+              <TableRow
+                key={priority.priorityId}
+                priority={priority}
+              ></TableRow>
+            </PriorityProvider>
           ))}
         </tbody>
       </table>
@@ -39,4 +36,3 @@ const TablePriorities = ({
 }
 
 export default TablePriorities
-
