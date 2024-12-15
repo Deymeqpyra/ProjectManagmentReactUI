@@ -16,44 +16,18 @@ const TableContainer = () => {
   const [error, setError] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const {
-    editedCategory,
-    error: editError,
-  } = useEditCategory()
-  const {
-    handleDeleteCategory: deleteCategory,
-    deletedCategoryId,
-  } = useDeleteCategory()
+  const { handleDeleteCategory: deleteCategory, deletedCategoryId } = useDeleteCategory()
 
   const handleAddCategory = (newCategory: CategoryDto) => {
     setCategories((prevCategories) => [...prevCategories, newCategory])
     setIsModalOpen(false)
   }
 
-  const handleDeleteCategory = async (categoryId: string) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      await deleteCategory(categoryId)
-    }
-  }
-
-  useEffect(() => {
-    if (editedCategory) {
-      setCategories((prevCategories) =>
-        prevCategories.map((category) =>
-          category.categoryId === editedCategory.categoryId
-            ? editedCategory
-            : category
-        )
-      )
-    }
-  }, [editedCategory])
 
   useEffect(() => {
     if (deletedCategoryId) {
       setCategories((prevCategories) =>
-        prevCategories.filter(
-          (category) => category.categoryId !== deletedCategoryId
-        )
+        prevCategories.filter((category) => category.categoryId !== deletedCategoryId)
       )
     }
   }, [deletedCategoryId])
@@ -95,7 +69,9 @@ const TableContainer = () => {
         Add
       </button>
       <CategoryProvider>
-        <TableCategories categories={categories} />
+        <TableCategories
+          categories={categories}
+        />
       </CategoryProvider>
       <Modal
         isOpen={isModalOpen}
