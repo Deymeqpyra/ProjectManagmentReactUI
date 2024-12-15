@@ -5,17 +5,14 @@ import { TagDto } from '../../../dto/TagDto'
 import { ProjectService } from '../Services/ProjectServices'
 import { TagService } from '../../Tags/Services/TagServices'
 import TagComponent from './TagComponent'
-import TagFilter from './TagFilter' // Import TagFilter
 import './ProjectCardList.css'
 
 const ProjectCardList = () => {
   const [projects, setProjects] = useState<ProjectDto[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  const [availableTags, setAvailableTags] = useState<TagDto[]>([]) 
-  const [selectedTag, setSelectedTag] = useState<string | null>(null) 
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [itemsPerPage, setItemsPerPage] = useState<number>(3) 
+  const [availableTags, setAvailableTags] = useState<TagDto[]>([]) // Store available tags
+  const [selectedTag, setSelectedTag] = useState<string | null>(null) // Store selected tag
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -43,16 +40,6 @@ const ProjectCardList = () => {
     fetchAvailableTags()
   }, [])
 
-  const filteredProjects = selectedTag
-    ? projects.filter((project) =>
-        project.tagProjects.some(({ tag }) => tag.name === selectedTag)
-      )
-    : projects
-
-  const indexOfLastProject = currentPage * itemsPerPage
-  const indexOfFirstProject = indexOfLastProject - itemsPerPage
-  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject)
-
   const handleNavigateToTasks = (projectId: string) => {
     navigate(`/tasks/${projectId}`)
   }
@@ -70,31 +57,13 @@ const ProjectCardList = () => {
     }
   }
 
-  const handleNextPage = () => {
-    if (currentPage < Math.ceil(filteredProjects.length / itemsPerPage)) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-
   if (loading) return <div>Loading projects...</div>
   if (error) return <div>{error}</div>
 
   return (
     <div className="grid-container">
-      <TagFilter
-        availableTags={availableTags}
-        selectedTag={selectedTag}
-        setSelectedTag={setSelectedTag}
-      />
-
       <div className="grid">
-        {currentProjects.map((project) => (
+        {projects.map((project) => (
           <div key={project.projectId} className="grid-card">
             <h3 className="grid-card-title">{project.title}</h3>
             <p className="grid-card-description">{project.description}</p>
@@ -138,27 +107,6 @@ const ProjectCardList = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Pagination controls */}
-      <div className="pagination-controls">
-        <button
-          className="pagination-button"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Prev
-        </button>
-        <span>
-          Page {currentPage} of {Math.ceil(filteredProjects.length / itemsPerPage)}
-        </span>
-        <button
-          className="pagination-button"
-          onClick={handleNextPage}
-          disabled={currentPage === Math.ceil(filteredProjects.length / itemsPerPage)}
-        >
-          Next
-        </button>
       </div>
     </div>
   )
